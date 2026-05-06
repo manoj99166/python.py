@@ -1,14 +1,23 @@
 import qrcode
-from IPython.display import display
-qr = qrcode.QRCode(
-    version=1,
-    box_size=5,
-    border=4,
-)
-qr.add_data('https://chatgpt.com')
-qr.make(fit=True)
+from matplotlib import pyplot as plt
+from urllib.parse import quote
 
-img = qr.make_image(fill_color="orange", back_color="white")
-type(img)
-img.save("MANU.png")
-display(img)
+upi_id = "8660972945@ptsbi"
+name = "RavishankarAnkir"
+amount = "10000"
+
+# Encode name properly
+name = quote(name)
+
+# Create UPI payment link
+upi_link = f"upi://pay?pa={upi_id}&pn={name}&am={amount}&cu=INR"
+
+print(upi_link)
+
+# Generate QR code
+img = qrcode.make(upi_link)
+
+# Display QR
+plt.imshow(img)
+plt.axis("off")
+plt.show()
